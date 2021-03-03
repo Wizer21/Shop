@@ -1,9 +1,12 @@
 <template>
-    
+    <p>
+        MAIN {{ this.$store.state.count }}
+    </p>
 </template>
 
 <script>
+
 export default {
-    name: 'Main'
+    name: 'Main',
 }
 </script>
