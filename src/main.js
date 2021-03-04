@@ -5,7 +5,7 @@ import Index from './pages/Index.vue'
 import Main from './pages/Main.vue'
 import Error from './pages/Error.vue'
 
-// import db from './lowdb/'
+const db = require('./lowdb/lowdb.js')
 
 // Create Routes
 const routes = {
@@ -17,7 +17,8 @@ const routes = {
 const store = createStore({
     state () {
       return {
-        count: 0
+        count: 156,
+        object: db.getObjectList()
       }
     },
     mutations: {
@@ -27,6 +28,7 @@ const store = createStore({
     }
   })
 
+// Create Router
 const SimpleRouter = {
   data: () => ({
     currentRoute: window.location.pathname
@@ -43,6 +45,4 @@ const SimpleRouter = {
 }
 
 // Create APP 
-const app = createApp(SimpleRouter).mount('#app')  
-// Bind store to the app
-app.use(store)
+createApp(SimpleRouter).use(store).mount('#app')  
