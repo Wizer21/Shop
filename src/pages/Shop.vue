@@ -3,7 +3,7 @@
         Shop
     </h1>
     <div v-for="obj in items" v-bind:key="obj.id">    
-        <ItemCard :object="obj"> 
+        <ItemCard :item="obj"> 
         </ItemCard>
     </div>
 </template>

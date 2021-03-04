@@ -21,14 +21,28 @@ db.defaults({
             name: 'Monstera Deliciosa',
             description: 'The specific epithet deliciosa means "delicious", referring to the edible fruit, while monstera means "monstrous", in reference to the size that this plant can grow to, over 9 m.',
             stock: 8,
-            size: [
+            sizes: [
                 {
-                    s_name: 'M',
+                    s_name: 'S',
                     buy_p: '15.34',
                     tva: '20%',
                     sell_: '18.94',
-                    image: 'url'
-                }
+                    image: 'monstera_s.jpg'
+                },
+                {
+                    s_name: 'M',
+                    buy_p: '24.24',
+                    tva: '20%',
+                    sell_: '35.12',
+                    image: 'monstera_s.jpg'
+                },
+                {
+                    s_name: 'L',
+                    buy_p: '45.34',
+                    tva: '20%',
+                    sell_: '67.54',
+                    image: 'monstera_s.jpg'
+                },
             ]
         },
         {
@@ -36,7 +50,7 @@ db.defaults({
             name: 'Dieffenbachia ',
             description: 'Dieffenbachia is a genus of plants in the family Araceae. They are plants with mottled leaves, also called canes of the dumb in the common language.',
             stock: 10,
-            size: [
+            sizes: [
                 {
                     s_name: 'M',
                     buy_p: '3.34',
@@ -51,7 +65,7 @@ db.defaults({
             name: 'Dracaena ',
             description: 'Dracaena is a genus of plants of the family Asparagaceae. This genus was created by Linnaeus in 1767 in Systema Naturae.',
             stock: 80,
-            size: [
+            sizes: [
                 {
                     s_name: 'M',
                     buy_p: '2.34',
