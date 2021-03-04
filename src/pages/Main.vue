@@ -1,15 +1,24 @@
 <template>
-    <p>
-        MAIN {{ this.$store.state.count }}
-        {{ this.$store.state.object[0].name }}
-    </p>
-    <button @click="this.$store.commit('increment')">
-        Incrementer
-    </button>
+    <div>
+        <button v-if="this.$store.state.logged">
+            Profile
+        </button>
+        <button v-else>
+            Login
+        </button>
+        <a href="/shop">
+            <button>
+                Shop
+            </button>
+        </a>
+        <button v-if="this.$store.state.logged">
+            Cart
+        </button>
+    </div>
 </template>
 
-<script>
 
+<script>
 export default {
     name: 'Main',
 }

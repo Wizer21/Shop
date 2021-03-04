@@ -1,32 +1,19 @@
 import {createApp, h} from 'vue'
-import { createStore } from 'vuex'
 
 import Index from './pages/Index.vue'
 import Main from './pages/Main.vue'
+import Shop from './pages/Shop.vue'
 import Error from './pages/Error.vue'
 
-const db = require('./lowdb/lowdb.js')
+// Import Store
+import store from './store.js'
 
 // Create Routes
 const routes = {
   '/': Index,
-  '/main': Main
+  '/main': Main,
+  '/shop': Shop
 }
-
-// Create Store
-const store = createStore({
-    state () {
-      return {
-        count: 156,
-        object: db.getObjectList()
-      }
-    },
-    mutations: {
-      increment (state) {
-        state.count++
-      }
-    }
-  })
 
 // Create Router
 const SimpleRouter = {
