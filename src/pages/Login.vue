@@ -1,8 +1,8 @@
-<template>
-    <div id="main">            
-        <button id="swap_button">
-            Swap
-        </button>
+<template>    
+    <button id="swap_button">
+        Swap
+    </button>
+    <div id="main">        
         <div id="login">
             <h1 id="login_title">
                 Login
@@ -11,11 +11,11 @@
                 <p class="text">
                     Username
                 </p>
-                <input class="spacing" type="text" name="">
+                <input class="spacing" type="text">
                 <p class="text">
                     Password
                 </p>
-                <input class="spacing" type="text" name="">
+                <input class="spacing" type="text">
                 <button class="spacing">
                     Connection
                 </button>
@@ -26,13 +26,17 @@
                 <p class="text">
                     Username
                 </p>
-                <input class="spacing" type="text" name="">
+                <input class="spacing" type="text">
                 <p class="text">
                     Password
                 </p>
-                <input class="spacing" type="text" name="">
+                <input class="spacing" type="text">
+                <p class="text">
+                    Confirm Password
+                </p>
+                <input class="spacing" type="text">
                 <button class="spacing">
-                    Connection
+                    Register
                 </button>
             </div>
             <h1 id="register-title">
@@ -60,14 +64,16 @@ export default {
             if (onLogin){
                 onLogin = false
 
-                login.style.transform = "translate(-100vh, -100vh)"
-                register.style.transform = "translate(-15vh, -15vh)"
+                login.style.transform = "translate(-100vw, -100vh)"
+                register.style.transform = "translate(-10vw, -20vh)"
+                button_slide.style.transform = "translate(10vw, 60vh)"
             }
             else{
                 onLogin = true
 
-                login.style.transform = "translate(15vh, 15vh)"
-                register.style.transform = "translate(200vh, 200vh)"
+                login.style.transform = "translate(15vw, 15vh)"
+                register.style.transform = "translate(200vw, 200vh)"
+                button_slide.style.transform = "translate(80vw, 20vh)"
             }
         })
     }
@@ -75,12 +81,11 @@ export default {
 </script>
 
 <style scoped>
-#main.
+#main
 {
     height: 90vh;
     width: 90vw;
     overflow: hidden;
-    background-color: aqua;
 }
 #login
 {
@@ -92,8 +97,7 @@ export default {
 
     transition-duration: 2s;
 
-    pointer-events: none;
-    transform: translate(15vh, 15vh);
+    transform: translate(15vw, 15vh);
 }
 #register
 {    
@@ -104,9 +108,8 @@ export default {
     width: 100vw;
 
     transition-duration: 2s;
-    transform: translate(200vh, 100vh);
+    transform: translate(200vw, 100vh);
 
-    pointer-events: none;
 }
 #body_top
 {
@@ -156,16 +159,23 @@ export default {
 {
     position: relative;
     text-align: right;
-    margin: 0em;
-    padding: 1em;
 }
 #swap_button
 {
     margin: 4em;
-    left: 80vw;
+    z-index: 2;
+    width: 4em;
+    height: 4em;
+    border-radius: 50%;
+    background-color: transparent;
+    border: 1px solid black;
+    outline: none;
 
     position: absolute;
     height: 10vh;
     align-self: center;
+    transition-duration: 2s;
+
+    transform: translate(80vw, 20vh);
 }
 </style>
