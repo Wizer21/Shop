@@ -4,6 +4,7 @@ import Index from './pages/Index.vue'
 import Main from './pages/Main.vue'
 import Shop from './pages/Shop.vue'
 import Error from './pages/Error.vue'
+import Login from './pages/Login.vue'
 
 // Import Store
 import store from './store.js'
@@ -12,7 +13,8 @@ import store from './store.js'
 const routes = {
   '/': Index,
   '/main': Main,
-  '/shop': Shop
+  '/shop': Shop,
+  '/login': Login
 }
 
 // Create Router

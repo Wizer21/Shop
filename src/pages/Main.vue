@@ -3,9 +3,11 @@
         <button v-if="this.$store.state.logged">
             Profile
         </button>
-        <button v-else>
-            Login
-        </button>
+        <a v-else href="/login">
+            <button>
+                Login
+            </button>
+        </a>
         <a href="/shop">
             <button>
                 Shop

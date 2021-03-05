@@ -28,6 +28,9 @@
                     {{ getList.sell_p }} €
                 </p>
             </div>    
+            <button id="addbutton">
+                Add To Card
+            </button>
         </div>
     </div>
 </template>
@@ -111,24 +114,24 @@
             })
 
             const sizes = document.getElementsByClassName("size_button")
-            const floating_img = document.getElementById("floating_img")        
+            const floating = document.getElementById("floating_image")      
             let isIn = false
             for (let size of sizes){
                 size.addEventListener("mouseenter", event => {
                     isIn = true
-                    floating_img.style.opacity = 1
+                    floating.style.opacity = 1
                     updateFloatingPosition(event)
                     
                 })
                 size.addEventListener("mouseleave", () => {
                     isIn = false
-                    floating_img.style.opacity = 0
+                    floating.style.opacity = 0
                 })
                 size.addEventListener("mousemove", event => {
                     if (isIn){
                         updateFloatingPosition(event)
                     }
-                    floating_img.style.opacity = 1
+                    floating.style.opacity = 1
                 })
             }
         }
@@ -159,12 +162,14 @@
         width: 13em;
         border: 1px solid black;
         transition-duration: 500ms;
+        z-index: 2;
     }
     #panel{
         grid-row: 1;
         grid-column: 1;
         border-top-right-radius: 1em;
         border-bottom-right-radius: 1em;
+        z-index: 1;
 
         padding: 1em;
         top: -20em;
@@ -175,7 +180,7 @@
         transition-duration: 500ms;
     }
     #image_holder{
-
+        z-index: 3;
         width: 100%;
         height: 100%;
     }
@@ -183,6 +188,7 @@
         object-fit: cover;
         width:100%; 
         height:100%;
+        
     }
     /* Text */
     .no_margin{
@@ -191,18 +197,16 @@
     #description_scroll{
         padding-top: 1em;
         font-size: 0.8em;
-        height: 12em;
+        height: 10em;
         overflow-x: hidden;
         overflow-y: auto;
     }
     .size_button
     {
-        position: static;
-        background-color: white;
+        position: relative;
         margin: 0.6em;
         border-radius: 50%;
-        border: 1px solid black;
-        z-index: 3;
+        border: 0.8px solid black;
 
         height: 3em;
         width: 3em;
@@ -212,11 +216,9 @@
     }
     .size_button:hover
     {
-        position: static;
-        z-index: 3;
+        position: relative;
         transition-duration: 200ms;
         transform: scale(1.1);
-        /* FLOATING IMAGE */
     }
     .minimize
     {
@@ -251,11 +253,13 @@
         height: 10em;
         width: 10em;
         border-radius: 50%;
-
-        pointer-events: none;
         z-index: 2;
 
+        pointer-events: none;
+        opacity: 0;
+
         overflow: hidden;
+        transition-duration: 200ms;
     }     
     #floating_img
     {
@@ -264,9 +268,15 @@
         object-position: center;
         width: 100%;
         height: 100%;
-        z-index: 2;
-
-        transition-duration: 300ms;
+        pointer-events: none;
     }  
-
+    #addbutton
+    {
+        margin-top: 0.9em;
+        position: relative;
+        align-self: center;
+        border: 1px solid black;
+        border-radius: 0.5em;
+        width: 100%;
+    }
 </style>
