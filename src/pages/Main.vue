@@ -1,6 +1,7 @@
 <template>
     <div>
         {{ this.$store.state.logged }}
+        {{ this.$store.state.user_id }}
         <button v-if="this.$store.state.logged">
             Profile
         </button>

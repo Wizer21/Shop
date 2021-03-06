@@ -85,10 +85,13 @@ export default {
             }
             else{               
                 if (db.getUserFromName(r_username) == undefined){
-                    db.registerUser(r_username, r_password)
+                    let new_id = db.registerUser(r_username, r_password)
+                    this.$store.commit("login", {
+                        id: new_id
+                    })
+                    
+                    
                     window.location.href = '/main'
-
-                    this.$store.commit("login")
                 }
                 else{
                     console.log("username not avaible")

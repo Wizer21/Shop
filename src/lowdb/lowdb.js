@@ -89,9 +89,11 @@ export function getUserFromName(username){
   }
 
 export function registerUser(username, password){   
+    let current_id = db.get('users_count').value()
+
     db.get('users')
         .push({
-            id: db.get('users_count').value(),
+            id: current_id,
             name: username,
             password: password,
             isAdmin: false,
@@ -102,6 +104,7 @@ export function registerUser(username, password){
         .write()
     
     db.update('users_count', n => n + 1).write()
+    return current_id
 }
 
 export function getObjectList(){
