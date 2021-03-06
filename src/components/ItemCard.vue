@@ -35,7 +35,7 @@
     </div>
 </template>
 
-<script>
+<script scoped>
     export default {    
         name: 'ItemCard',
         props: {
@@ -47,6 +47,10 @@
                 type: String,
                 required: true,
             },
+            item_id: {
+                type: Number,
+                required: true,
+            }
         },
         data() {
             return {
@@ -95,7 +99,6 @@
             // Open and close the side panel on hover event
             const card = document.getElementById("card")
             const panel = document.getElementById("panel")
-            console.log(card)
             card.addEventListener("mouseenter", () => {
                 panel.style.transform = 'translate(13em, 0em)'
                 card.style.transform = 'scale(1.05)'
@@ -136,10 +139,8 @@
             }
         }
         }
-
         function updateFloatingPosition(event){
             const floating = document.getElementById("floating_image")
-            console.log(document.fontSize)
             floating.style.top = `${event.pageY - 80}px`
             floating.style.left = `${event.pageX - 80}px`
         }

@@ -1,5 +1,4 @@
 import { createStore } from 'vuex'
-const db = require('./lowdb/lowdb.js')
 import VuexPersist from 'vuex-persist'
 
 const vuexPersist = new VuexPersist({
@@ -12,18 +11,15 @@ const store = createStore({
       return {
         logged: false,
         user_id: 0,
-        item_list: db.getObjectList()
       }
     },
     mutations: {
-      login (payload) {
+      login (state, payload) {
         this.logged = true
-        console.log("LOGIN MUTATION")
-        console.log(this.logged)
-        this.user_id = payload.id
+        this.user_id = payload.user_id
+        console.log(this.state)
       }
     },    
     plugins: [vuexPersist.plugin],
   })
-
 export default store

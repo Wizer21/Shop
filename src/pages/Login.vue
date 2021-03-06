@@ -81,16 +81,15 @@ export default {
             const r_password = document.getElementById("r_password").value
             const r_password2 = document.getElementById("r_password2").value
             if (r_password != r_password2){
+                console.log("Passwords are not the same")
                 return
             }
             else{               
                 if (db.getUserFromName(r_username) == undefined){
                     let new_id = db.registerUser(r_username, r_password)
                     this.$store.commit("login", {
-                        id: new_id
-                    })
-                    
-                    
+                        user_id: new_id
+                    })      
                     window.location.href = '/main'
                 }
                 else{

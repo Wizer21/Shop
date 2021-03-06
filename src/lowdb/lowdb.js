@@ -51,7 +51,7 @@ db.defaults({
         },
         {
             id: 1,
-            name: 'Dieffenbachia ',
+            name: 'Dieffenbachia',
             description: 'Dieffenbachia is a genus of plants in the family Araceae. They are plants with mottled leaves, also called canes of the dumb in the common language.',
             sizes: [
                 {
@@ -59,14 +59,14 @@ db.defaults({
                     buy_p: '3.34',
                     tva: '20%',
                     sell_p: '7.84',
-                    image: 'monstera_s.jpg',                    
+                    image: 'dieffenbachia_m.jpg',                    
                     stock: 18,
                 }
             ]
         },
         {
             id: 2,
-            name: 'Dracaena ',
+            name: 'Dracaena',
             description: 'Dracaena is a genus of plants of the family Asparagaceae. This genus was created by Linnaeus in 1767 in Systema Naturae.',
             sizes: [
                 {
@@ -74,7 +74,7 @@ db.defaults({
                     buy_p: '2.34',
                     tva: '20%',
                     sell_p: '5.84',
-                    image: 'monstera_s.jpg',
+                    image: 'dracaena_m.jpg',
                     stock: 60,
                 }
             ]
@@ -101,7 +101,7 @@ export function registerUser(username, password){
             history: []
             }
         )
-        .write()
+        .write()    
     
     db.update('users_count', n => n + 1).write()
     return current_id
