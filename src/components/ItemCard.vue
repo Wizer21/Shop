@@ -1,14 +1,12 @@
 <template>
-    <div id="floating_image">
-        <img id="floating_img" :src="require(`../images/${getList.image}`)"><img>
-    </div>
-    <div id="main">
-        <div id="card">
+
+    <div class="main">
+        <div class="card">
             <div id="image_holder">
                 <img :src="require(`../images/${getList.image}`)"><img>
             </div>
         </div>
-        <div id="panel">
+        <div class="panel">
             <h2 class="no_margin">
                 {{ item.name }}
             </h2>
@@ -28,7 +26,7 @@
                     {{ getList.sell_p }} €
                 </p>
             </div>    
-            <button id="addbutton">
+            <button id="addbutton" @click="addToCard">
                 Add To Card
             </button>
         </div>
@@ -36,6 +34,7 @@
 </template>
 
 <script scoped>
+const db = require('../lowdb/lowdb.js')
     export default {    
         name: 'ItemCard',
         props: {
@@ -93,31 +92,50 @@
                         return
                     }
                 } 
+            },
+            addToCard(){
+                db.addToCart(this.$store.state.user_id, this.item_id, (this.new_size == "" ? this.displayed_size : this.new_size))
+                this.$emit('updatedCart')
             }
         },
         mounted() {
             // Open and close the side panel on hover event
-            const card = document.getElementById("card")
-            const panel = document.getElementById("panel")
+            const card = document.getElementsByClassName("card")[this.item_id]
+            const panel = document.getElementsByClassName("panel")[this.item_id]
+            const main = document.getElementsByClassName("main")[this.item_id]
+
             card.addEventListener("mouseenter", () => {
-                panel.style.transform = 'translate(13em, 0em)'
+                panel.style.transform = 'translate(13em, 0em)' 
                 card.style.transform = 'scale(1.05)'
+                
+                main.style.zIndex = "2"
+                card.style.zIndex = "4"
+                panel.style.zIndex = "3"
             })
             card.addEventListener("mouseleave", () => {
                 if (!panel.matches(':hover')){
                     panel.style.transform = 'translate(0em, 0em)'
-                    card.style.transform = 'scale(1)'
+                    card.style.transform = 'scale(1)' 
+
+                    main.style.zIndex = "1"
+                    card.style.zIndex = "2"
+                    panel.style.zIndex = "1"   
                 }            
             })
             panel.addEventListener("mouseleave", () => {
                 if (!card.matches(':hover')){
                     panel.style.transform = 'translate(0em, 0em)'
-                    card.style.transform = 'scale(1)'
+                    card.style.transform = 'scale(1)'  
+                
+                    card.style.zIndex = "2"
+                    panel.style.zIndex = "1"   
+                    main.style.zIndex = "1"
                 }            
             })
 
             const sizes = document.getElementsByClassName("size_button")
-            const floating = document.getElementById("floating_image")      
+            const floating = document.getElementById("floating_image")
+
             let isIn = false
             for (let size of sizes){
                 size.addEventListener("mouseenter", event => {
@@ -148,28 +166,33 @@
 
 <style scoped>
     /* Boxes */
-    #main{
+    .main{
         display: grid;        
         grid-template-columns: 1, 1fr;        
         grid-template-rows: 1, 1fr;
+        padding: 1em;
+        z-index: 0;
     }
-    #card{
+    .card{
         
         grid-row: 1;
         grid-column: 1;
 
+        border-radius: 1em;
         z-index: 2;
         height: 20em;
         width: 13em;
         border: 1px solid black;
         transition-duration: 500ms;
         z-index: 2;
+
+        overflow: hidden;
     }
-    #panel{
+    .panel{
         grid-row: 1;
         grid-column: 1;
-        border-top-right-radius: 1em;
-        border-bottom-right-radius: 1em;
+        
+        border-radius: 1em;
         z-index: 1;
 
         padding: 1em;
@@ -212,6 +235,7 @@
         height: 3em;
         width: 3em;
         outline: none;
+        z-index: 6;
 
         transition-duration: 200ms;
     }
@@ -248,29 +272,7 @@
         align-self: baseline;
         text-align: center;
     }
-    #floating_image
-    {
-        position: absolute;
-        height: 10em;
-        width: 10em;
-        border-radius: 50%;
-        z-index: 2;
 
-        pointer-events: none;
-        opacity: 0;
-
-        overflow: hidden;
-        transition-duration: 200ms;
-    }     
-    #floating_img
-    {
-        position: absolute;
-        object-fit: cover;
-        object-position: center;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-    }  
     #addbutton
     {
         margin-top: 0.9em;
@@ -279,5 +281,12 @@
         border: 1px solid black;
         border-radius: 0.5em;
         width: 100%;
+        outline: none;
+        transition-duration: 400ms;
+    }
+    #addbutton:hover
+    {
+        transition-duration: 400ms;
+        transform: scale(1.1);
     }
 </style>

@@ -13,7 +13,17 @@ db.defaults({
             name: 'Simon',
             password: '123',
             isAdmin: true,
-            cart: [],
+            cart: [
+                {
+                    id: 0,
+                    sizes: [
+                        {
+                            size: "S",
+                            quantity: 2
+                        }
+                    ]
+                }
+            ],
             history: []
         },
     ],
@@ -86,7 +96,7 @@ export function getUserFromName(username){
     return db.get('users')
           .find({name: username})
           .value()
-  }
+}
 
 export function registerUser(username, password){   
     let current_id = db.get('users_count').value()
@@ -110,4 +120,87 @@ export function registerUser(username, password){
 export function getObjectList(){
     return db.get('objects')
         .value()
+}
+
+export function getUserCart(id){
+    return db.get('users')
+        .find({id: id})
+        .get('cart')
+        .value()
+}
+
+export function addToCart(user_id, item_id, item_size){
+    console.log('get ', user_id, item_id, item_size)
+    let plantExist = db.get('users')
+                    .find({id: user_id})
+                    .get('cart')
+                    .find({id: item_id})
+                    .value()
+
+    // Plant Exist
+    if (plantExist){
+        let sizeExist = db.get('users')
+                        .find({id: user_id})
+                        .get('cart')
+                        .find({id: item_id})
+                        .get('sizes')
+                        .find({size: item_size})
+                        .value()
+        
+        // Size Exist
+        if (sizeExist){
+            db.get('users')
+            .find({id: user_id})
+            .get('cart')
+            .find({id: item_id})
+            .get('sizes')
+            .find({size: item_size})
+            .update('quantity', n => n + 1).write()
+        }
+        // Size Do not exist
+        else{
+            db.get('users')
+            .find({id: user_id})
+            .get('cart')
+            .find({id: item_id})
+            .get('sizes')
+            .push({
+                size: item_size,
+                quantity: 1
+            })
+            .write()            
+        }
+    }
+    // Plant Do not exist
+    else{
+        db.get('users')
+        .find({id: user_id})
+        .get('cart')
+        .push({
+            id: item_id,
+            sizes: [
+                {
+                    size: item_size,
+                    quantity: 1
+                }
+            ]
+        })
+        .write() 
+    }
+}
+
+export function getCardLength(user_id){
+    const cart = db.get('users')
+                .find({id: user_id})
+                .get('cart')
+                .value()
+
+    let count = 0
+    for(let item of cart){
+        for (let size of item.sizes){
+            count += size.quantity
+        }
+    }
+    
+    return count
 }
