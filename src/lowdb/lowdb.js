@@ -204,3 +204,17 @@ export function getCardLength(user_id){
     
     return count
 }
+
+export function getImageSrc(item_id, item_size){
+    return db.get('objects')
+            .find({id: item_id})
+            .get('sizes')
+            .find({s_name: item_size})
+            .get('image')
+}
+
+export function getItemFromId(item_id){    
+    return db.get('objects')
+            .find({id: item_id})
+            .value()
+}

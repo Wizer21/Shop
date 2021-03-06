@@ -14,9 +14,11 @@
         <ItemCard 
             v-for="obj in items" 
             v-bind:key="obj.id" 
+            
             :item="obj" 
             :displayed_size="obj.sizes[0].s_name" 
             :item_id="obj.id" 
+
             @updatedCart="updateCart"
             > 
         </ItemCard>
@@ -30,7 +32,6 @@ const db = require('../lowdb/lowdb.js')
 
 export default {
 components: { ItemCard },
-
     computed: {
         items () {
             return db.getObjectList()
