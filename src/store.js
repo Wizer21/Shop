@@ -10,8 +10,10 @@ const store = createStore({
       }
     },
     mutations: {
-      increment (state) {
-        state.count++
+      login () {
+        this.logged = true
+        console.log("LOGIN MUTATION")
+        console.log(this.logged)
       }
     }
   })
