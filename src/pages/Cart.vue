@@ -1,8 +1,17 @@
 <template>
     <div id="main">
-        <h1>
-            Cart 
-        </h1>    
+        <div id="header">
+            <a href="/main">
+                <button class="button">
+                    Home
+                </button>  
+            </a>
+            <a href="/shop">
+                <button class="button">
+                    Shop
+                </button>   
+            </a>  
+        </div>
         <ItemCartMin
             v-for="(obj, index_p) in getItemList" 
             :key="index_p"  
@@ -147,5 +156,33 @@ components: { ItemCartMin },
 {
     position: relative;
     overflow: hidden;
+}
+#header
+{
+    display: flex;
+    flex-direction: row;
+}
+.button
+{
+    width: 50vw;
+    height: 8vh;
+
+    background-color: transparent;
+    border: 0px solid transparent;
+    border-bottom: 1px solid black;
+    transition-duration: 300ms;
+    font-size: 2em;
+    margin-bottom: 2em;
+    outline: none;
+}
+.button:hover
+{
+    transition-duration: 300ms;
+    transform: translate(0em, 0.5em);
+}
+.button:active
+{
+    transition-duration: 50ms;
+    transform: translate(0em, 0.2em);
 }
 </style>
