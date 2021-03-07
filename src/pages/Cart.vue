@@ -1,16 +1,22 @@
 <template>
-    <h1>
-        Cart 
-    </h1>
-    <div v-for="item in itemsCart" v-bind:key="item.id"  >
-        <ItemCartMin 
-            v-for="sizeobj in item.sizes" 
-            v-bind:key="sizeobj.size"  
-            
-            :item_id="item.id"
-            :item="sizeobj">
-        </ItemCartMin>        
-    </div>
+    <div id="main">
+        <h1>
+            Cart 
+        </h1>    
+        <div>
+            <ItemCartMin
+                v-for="(obj, index) in itemList" 
+                :key="index"  
+                
+                :item_id="obj.item_id"
+                :item_size="obj.size"
+                :item_quantity="obj.quantity"
+
+                @delete_item="deleteElement(index)"
+                >
+            </ItemCartMin>        
+        </div>
+    </div>   
 </template>
 
 <script>
@@ -21,10 +27,44 @@ export default {
 components: { ItemCartMin },
     name: 'Cart',
     computed: {
-        itemsCart(){
-            console.log(db.getUserCart(this.$store.state.user_id))
+        calculateItemsCart(){
             return db.getUserCart(this.$store.state.user_id)
-        } 
-    }    
+        },
+        calculateItemList(){
+            let list = []
+            let database = db.getUserCart(this.$store.state.user_id)
+
+            for (let item of database){
+                for (let size of item.sizes){
+                
+                    size.item_id = item.id
+                    list.push(size)
+                }
+            }
+            return list
+        }
+    },
+    methods: {
+        deleteElement(index) {
+            this.itemList.splice(index, 1)
+            console.log(this.itemList)
+        }
+    },
+    data(){
+        return {
+            itemList: []
+        }
+    },
+    beforeMount() {
+        this.itemList = this.calculateItemList
+    }
 }
 </script>
+
+<style scoped>
+#main
+{
+    position: relative;
+    overflow: hidden;
+}
+</style>

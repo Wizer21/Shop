@@ -39,7 +39,6 @@ components: { ItemCard },
     },
     methods: {
         updateCart(){
-            console.log("in")
             document.getElementById('cart_button').textContent = `Cart ${db.getCardLength(this.$store.state.user_id)}`
         }
     },

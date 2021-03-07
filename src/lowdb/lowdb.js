@@ -130,7 +130,6 @@ export function getUserCart(id){
 }
 
 export function addToCart(user_id, item_id, item_size){
-    console.log('get ', user_id, item_id, item_size)
     let plantExist = db.get('users')
                     .find({id: user_id})
                     .get('cart')
@@ -186,6 +185,42 @@ export function addToCart(user_id, item_id, item_size){
             ]
         })
         .write() 
+    }
+}
+
+export function removeFromCart(user_id, item_id, item_size){     
+    db.get('users')
+    .find({id: user_id})
+    .get('cart')
+    .find({id: item_id})
+    .get('sizes')
+    .find({size: item_size})
+    .update('quantity', n => n - 1)
+    .write()
+}
+
+export function deleteItemFromCart(user_id, item_id, item_size){
+    db.get('users')
+    .find({id: user_id})
+    .get('cart')
+    .find({id: item_id})
+    .get('sizes')
+    .remove({size: item_size})
+    .write()
+
+    let cart = db.get('users')
+                .find({id: user_id})
+                .get('cart')
+                .find({id: item_id})
+                .get('sizes')
+                .value()
+
+    if (cart.length == 0){
+        db.get('users')
+        .find({id: user_id})
+        .get('cart')
+        .remove({id: item_id})
+        .write()
     }
 }
 
