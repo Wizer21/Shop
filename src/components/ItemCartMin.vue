@@ -102,18 +102,18 @@ const db = require('../lowdb/lowdb.js')
     flex-wrap: wrap;
 
     border-radius: 1em;
-    transition-duration: 5000ms;
+    transition-duration: 500ms;
 }
 .main:hover
 {
-    transition-duration: 5000ms;
+    transition-duration: 500ms;
     transform: scale(1.05);
 }
 #image_holder
 {
     grid-column: 1;
-    height: 20vh;
-    width: 20vh;
+    height: 25vh;
+    width: 25vh;
 }
 img{
     object-fit: cover;
@@ -168,7 +168,7 @@ img{
     border: 1px solid black;
     border-radius: 0.5em;
 
-    margin: 1em;
+    margin: 0.6em;
 }
 @media screen and (max-width: 800px){
     #buttons

@@ -254,11 +254,13 @@ export function getCardLength(user_id){
 }
 
 export function getImageSrc(item_id, item_size){
+    console.log("db", item_id, item_size)
     return db.get('objects')
             .find({id: item_id})
             .get('sizes')
             .find({s_name: item_size})
             .get('image')
+            .value()
 }
 
 export function getItemFromId(item_id){    
