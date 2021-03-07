@@ -103,12 +103,10 @@ export default {
             let connectionAttempt = db.loginUser(l_username, l_password)
 
             if (connectionAttempt[0]){    
-                console.log("Connection succes", connectionAttempt[1].id)  
-
                 this.$store.commit("login", {
                     user_id: connectionAttempt[1].id
                 })    
-                //window.location.href = '/main'  
+                window.location.href = '/main'  
             }
             else{                
                 console.log("Connection failed")

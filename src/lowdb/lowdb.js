@@ -266,3 +266,9 @@ export function getItemFromId(item_id){
             .find({id: item_id})
             .value()
 }
+
+export function getUserFromId(user_id){
+    return db.get('users')
+            .find({id: user_id})
+            .value()
+}

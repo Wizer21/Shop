@@ -2,7 +2,7 @@
     <div id="main">
         <div id="nav_bar">
             <button v-if="state.logged" class="buttons">
-                Profile
+                {{ getUser.name }}
             </button>
             <a v-else href="/login">
                 <button class="buttons">
@@ -14,9 +14,11 @@
                     Shop
                 </button>
             </a>
-            <button v-if="state.logged" class="buttons">
-                Cart
-            </button>
+            <a href="/cart">
+                <button v-if="state.logged" class="buttons">
+                    Cart
+                </button>
+            </a>
         </div>
         <div id="flux">
             <div class="container" v-for="(image, index) in itemList" :key="index" >
@@ -33,7 +35,6 @@ export default {
     name: 'Main',
     computed: {
         state(){
-            console.log("main", this.$store.state)
             return this.$store.state
         },
         itemList(){
@@ -46,6 +47,9 @@ export default {
                 }
             }
             return list
+        },
+        getUser(){
+            return db.getUserFromId(this.$store.state.user_id)
         }
     },
 }
@@ -55,7 +59,9 @@ export default {
 <style scoped>
 #main
 {   
+    position: relative;
     display: flex;
+    overflow: hidden;
 }
 #nav_bar
 {

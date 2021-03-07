@@ -3,19 +3,18 @@
         <h1>
             Cart 
         </h1>    
-        <div>
-            <ItemCartMin
-                v-for="(obj, index) in itemList" 
-                :key="index"  
-                
-                :item_id="obj.item_id"
-                :item_size="obj.size"
-                :item_quantity="obj.quantity"
+        <ItemCartMin
+            v-for="(obj, index_p) in getItemList" 
+            :key="index_p"  
+            
+            :item_size="obj.size"
+            :item_quantity="obj.quantity"
+            :item_id="obj.item_id"
+            :index="index_p"
 
-                @delete_item="deleteElement(index)"
-                >
-            </ItemCartMin>        
-        </div>
+            @delete_item="deleteElement(index_p)"
+            >
+        </ItemCartMin>  
     </div>   
 </template>
 
@@ -42,12 +41,20 @@ components: { ItemCartMin },
                 }
             }
             return list
+        },
+        getItemList() {
+            return this.itemList
         }
     },
     methods: {
         deleteElement(index) {
-            this.itemList.splice(index, 1)
-            console.log(this.itemList)
+            let my_list = []
+            for (let i = 0; i < this.itemList.length ; i++){
+                if( i != index){
+                    my_list.push(this.itemList[i])
+                }
+            }
+            this.itemList = my_list
         }
     },
     data(){

@@ -1,5 +1,5 @@
 <template>
-    <div id="main">
+    <div :id="id" class="main">
         <div id="image_holder">
             <img :src="itemImageSrc" alt="itemImage">
         </div>
@@ -14,7 +14,7 @@
         <p id="quantity">
             {{ quantity }}
         </p>
-        <dir id="buttons">
+        <div id="buttons">
             <button @click="add" class="button_add">
                 +
             </button>            
@@ -24,7 +24,7 @@
             <button @click="delete_item">
                 Delete
             </button>
-        </dir>
+        </div>
     </div>
 </template>
 
@@ -44,6 +44,10 @@ const db = require('../lowdb/lowdb.js')
             item_id: {
                 type: Number,
                 required: true,
+            },
+            index: {
+                type: Number,
+                required: true,
             }
         },
         data(){
@@ -52,6 +56,9 @@ const db = require('../lowdb/lowdb.js')
             }
         },
         computed: {
+            id(){
+                return `main${this.index}`
+            },
             itemImageSrc(){
                 return require(`../images/${db.getImageSrc(this.item_id, this.item_size)}`)
             },
@@ -60,7 +67,7 @@ const db = require('../lowdb/lowdb.js')
             },
             quantity(){
                 return this.local_item_quantity
-            },
+            }
         },
         methods: {
             add(){
@@ -75,16 +82,18 @@ const db = require('../lowdb/lowdb.js')
             },
             delete_item() {
                 db.deleteItemFromCart(this.$store.state.user_id, this.item_id, this.item_size)
-                this.$emit("delete_item")
-                            
+                
+                this.$emit("delete_item")                         
             }
         },
     }
 </script>
 
 <style scoped>
-#main
+.main
 {
+    position: relative;
+    overflow: hidden;
     display: flex;
     border: 1px solid black;
     margin: 1em;
@@ -93,11 +102,11 @@ const db = require('../lowdb/lowdb.js')
     flex-wrap: wrap;
 
     border-radius: 1em;
-    transition-duration: 300ms;
+    transition-duration: 5000ms;
 }
-#main:hover
+.main:hover
 {
-    transition-duration: 300ms;
+    transition-duration: 5000ms;
     transform: scale(1.05);
 }
 #image_holder
@@ -119,8 +128,8 @@ img{
 {
     padding: 0.2em;
     margin: 0em;
-    font-size: 1.2em; 
     word-wrap: break-word;
+    font-size: 2em;
 }
 #size
 {    
@@ -128,7 +137,7 @@ img{
     margin: 0em;
     margin-left: 0.2em;  
     padding: 0.3em;
-    
+    font-size: 1.5em;    
 }
 #buttons
 {
@@ -145,6 +154,21 @@ img{
     transition-duration: 400ms;
     outline: none;
     padding: 0em;
+    font-size: 1.5em;
+}
+#quantity
+{
+    height: min-content;
+    font-size: 2em;
+    margin-top: auto;
+    margin-bottom: auto;
+    text-align: center;
+
+    padding: 0.5em;
+    border: 1px solid black;
+    border-radius: 0.5em;
+
+    margin: 1em;
 }
 @media screen and (max-width: 800px){
     #buttons
@@ -161,6 +185,25 @@ img{
     {
         border: none !important;
     }
+    #title
+    {
+        font-size: 1.2em;
+    }
+    #size
+    {    
+        margin: 0em;
+    }
+    #quantity
+    {
+        position: absolute;
+        font-size: 1.4em;
+
+        margin: 2em;
+        margin-bottom: 3em;
+
+        right: 0px;
+        bottom: 0px;
+    }
 }
 
 #buttons button:hover
@@ -172,19 +215,5 @@ img{
 {
     transition-duration: 200ms;
     transform: translate(-1em, 0em);
-}
-#quantity
-{
-    height: min-content;
-    font-size: 2em;
-    margin-top: auto;
-    margin-bottom: auto;
-    text-align: center;
-
-    padding: 0.5em;
-    border: 1px solid black;
-    border-radius: 0.5em;
-
-    margin: 1em;
 }
 </style>

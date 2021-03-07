@@ -8,7 +8,7 @@
             Filter
         </button>
         <a href="/cart">
-            <button class="button">
+            <button class="button" id="cart_button">
                 Cart
             </button>
         </a>
@@ -110,6 +110,7 @@ components: { ItemCard },
 
     outline: none;
     transition-duration: 300ms;
+    font-size: 1.5em;
 }
 .button:hover
 {
@@ -133,6 +134,7 @@ components: { ItemCard },
      
     outline: none;
     padding: 1em;
+    font-size: 1.5em;
 }
 @media screen and (max-width: 800px){
     #nav_bar
