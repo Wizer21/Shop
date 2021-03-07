@@ -2,14 +2,22 @@
     <div id="floating_image">
         <img id="floating_img" ><img>
     </div>
-    <h1>
-        Shop
-    </h1>
-    <a href="/cart">
-        <button id="cart_button">
-            Cart
+    <div id="nav_bar">
+        <input id="search" placeholder="Search" >
+        <button class="button">
+            Filter
         </button>
-    </a>
+        <a href="/cart">
+            <button class="button">
+                Cart
+            </button>
+        </a>
+         <a href="/main">
+            <button class="button">
+                Home
+            </button>
+        </a>
+    </div>
     <div id="item_list">    
         <ItemCard 
             v-for="obj in items" 
@@ -77,5 +85,70 @@ components: { ItemCard },
 {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+}
+#nav_bar
+{
+    position: relative;
+    height: 10vh;
+    width: 100vw;
+    border: 1px solid black;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-content: flex-start;
+}
+.button
+{
+    position: relative;
+    height: 10vh;
+    min-width: 20vw;
+    background-color: transparent;
+    border: 0px solid transparent;
+    border-left: 1px solid black;
+
+    outline: none;
+    transition-duration: 300ms;
+}
+.button:hover
+{
+    transition-duration: 200ms;
+    transform: translate(-1em, 0em);
+
+}
+.button:active
+{
+    transition-duration: 25ms;
+    transform: translate(0.5em, 0em);
+
+}
+#search
+{
+    position: relative;
+    height: 10vh;
+    background-color: transparent;
+    border: 0px solid transparent;
+    margin-right: auto;
+     
+    outline: none;
+    padding: 1em;
+}
+@media screen and (max-width: 800px){
+    #nav_bar
+    {
+        height: 20vh;
+    }
+    #search
+    {
+        width: 100vw;
+    }
+    .button
+    {
+        border-top: 1px solid black;
+        width:max-content;
+        width: 33.33vw;
+        flex: 1;
+    }
 }
 </style>

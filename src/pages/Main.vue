@@ -86,6 +86,17 @@ export default {
     border: 0px solid transparent;
     border-bottom: 1px solid black;
     outline: none;
+    transition-duration: 500ms;
+}
+.buttons:hover
+{
+    transition-duration: 500ms;
+    transform: translate(0em, 0.5em);
+}
+.buttons:active
+{
+    transition-duration: 100ms;
+    transform: translate(0em, -0.2em);
 }
 .container
 {
@@ -94,7 +105,6 @@ export default {
     width: 60vw;
 
     overflow: hidden;
-    background-color: aqua;
 }
 .container img
 {
