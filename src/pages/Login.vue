@@ -11,12 +11,12 @@
                 <p class="text">
                     Username
                 </p>
-                <input class="spacing" type="text">
+                <input id="l_username" class="spacing" type="text">
                 <p class="text">
                     Password
                 </p>
-                <input class="spacing" type="text">
-                <button class="spacing">
+                <input id="l_password" class="spacing" type="text">
+                <button class="spacing" @click="connectionClicked()">
                     Connection
                 </button>
             </div>
@@ -95,6 +95,23 @@ export default {
                 else{
                     console.log("username not avaible")
                 }
+            }
+        },
+        connectionClicked(){            
+            const l_username = document.getElementById("l_username").value
+            const l_password = document.getElementById("l_password").value
+            let connectionAttempt = db.loginUser(l_username, l_password)
+
+            if (connectionAttempt[0]){    
+                console.log("Connection succes", connectionAttempt[1].id)  
+
+                this.$store.commit("login", {
+                    user_id: connectionAttempt[1].id
+                })    
+                //window.location.href = '/main'  
+            }
+            else{                
+                console.log("Connection failed")
             }
         }
     },

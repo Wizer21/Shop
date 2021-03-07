@@ -17,6 +17,7 @@ const store = createStore({
       login (state, payload) {
         this.logged = true
         this.user_id = payload.user_id
+        console.log("payload", payload)
         console.log(this.state)
       }
     },    

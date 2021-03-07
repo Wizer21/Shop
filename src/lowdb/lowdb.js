@@ -98,6 +98,19 @@ export function getUserFromName(username){
           .value()
 }
 
+export function loginUser(l_username, l_password){
+    let user = db.get('users')
+                    .find({name: l_username})
+                    .value()
+
+    if (user != undefined && user.password == l_password){
+        return [true, user]
+    }
+    else{
+        return [false]
+    }
+}
+
 export function registerUser(username, password){   
     let current_id = db.get('users_count').value()
 

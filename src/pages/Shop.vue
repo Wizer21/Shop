@@ -114,13 +114,13 @@ components: { ItemCard },
 .button:hover
 {
     transition-duration: 200ms;
-    transform: translate(-1em, 0em);
+    transform: translate(-0.5em, 0em);
 
 }
 .button:active
 {
-    transition-duration: 25ms;
-    transform: translate(0.5em, 0em);
+    transition-duration: 50ms;
+    transform: translate(-0.9em, 0em);
 
 }
 #search

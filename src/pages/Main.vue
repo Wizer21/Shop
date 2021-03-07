@@ -33,6 +33,7 @@ export default {
     name: 'Main',
     computed: {
         state(){
+            console.log("main", this.$store.state)
             return this.$store.state
         },
         itemList(){
@@ -44,8 +45,6 @@ export default {
                     list.push(size.image)
                 }
             }
-            console.log(list)
-
             return list
         }
     },
@@ -95,8 +94,8 @@ export default {
 }
 .buttons:active
 {
-    transition-duration: 100ms;
-    transform: translate(0em, -0.2em);
+    transition-duration: 50ms;
+    transform: translate(0em, 0.7em);
 }
 .container
 {
