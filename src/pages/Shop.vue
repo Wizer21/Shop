@@ -5,9 +5,11 @@
         </div>
         <div id="nav_bar">
             <input id="search" placeholder="Search" @input="typeEvent">
-            <button class="button">
-                Filter
-            </button>
+            <a href="">
+                <button class="button">
+                    Filter
+                </button>
+            </a>
             <a v-if="state.logged" href="/cart">
                 <button class="button" id="cart_button">
                     Cart
@@ -117,7 +119,6 @@ components: { ItemCard },
 #nav_bar
 {
     position: relative;
-    height: 10vh;
     width: 100vw;
     border: 1px solid black;
 
@@ -129,7 +130,7 @@ components: { ItemCard },
 .button
 {
     position: relative;
-    height: 10vh;
+    height: 100%;
     min-width: 20vw;
     background-color: transparent;
     border: 0px solid transparent;

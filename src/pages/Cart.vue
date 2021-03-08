@@ -93,9 +93,9 @@ components: { ItemCartMin },
             totalPrice: 0
         }
     },
-    created() {
+    mounted() {
         this.itemList = this.calculateItemList
-        this.totalPrice = this.calculateTotalPrice
+        this.calculateTotalPrice()
     }
 }
 </script>
