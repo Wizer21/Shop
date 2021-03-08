@@ -13,8 +13,9 @@
 
 <script>
 export default {
-    name: 'Index'
+    name: 'Index',
 }
+
 </script>
 
 <style scoped>
@@ -54,6 +55,5 @@ a
     text-align: center;
     font-family: 'Caveat';
 }
-
-
 </style>
+

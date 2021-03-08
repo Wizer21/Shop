@@ -33,6 +33,7 @@
 <script>
 import Matter from 'matter-js';    
 import ItemCartMin from '../components/ItemCartMin.vue'
+import { nextTick } from 'vue';
 const db = require('../lowdb/lowdb.js')
 
 export default {
@@ -69,32 +70,32 @@ components: { ItemCartMin },
             }
             this.itemList = my_list
         },
-        populateScene(Bodies, World, engine){
+        populateScene(){
             for(let i of this.itemList){
                 let src = db.getImageSrc(i.item_id, i.size)
                 for (let e = 0; e < i.quantity; e++){
-                    this.createItem(Bodies, World, engine, src)
+                    this.createItem(this.matter_list.Bodies, this.matter_list.World, this.matter_list.engine, src)
                 }
             }
         },
         createItem(Bodies, World, engine, url){
-            console.log("window.innerWidth", window.innerWidth)
-
             var plant = Bodies.rectangle(Math.random() * window.innerWidth, Math.random() * window.innerHeight/2 , 50, 80)
             plant.render.sprite.texture = require(`../images/min/${url}`)
 
             World.add(engine.world, [plant])
-        },
+        }
     },
     data(){
         return {
-            itemList: []
+            itemList: [],
+            matter_list: {}
         }
     },
     beforeMount() {
         this.itemList = this.calculateItemList
     },
     mounted(){
+         // ---- MATTER JS ----
         // module aliases
         var Engine = Matter.Engine,
         Render = Matter.Render,
@@ -118,10 +119,10 @@ components: { ItemCartMin },
         }
         })
 
-        let top = Bodies.rectangle(0, 0, window.innerWidth * 2, 20, { isStatic: true })
-        let bottom = Bodies.rectangle(0, window.innerHeight/2, window.innerWidth * 2, 20, { isStatic: true })
-        let left = Bodies.rectangle(0, 0, 20, window.innerHeight, { isStatic: true })
-        let right = Bodies.rectangle(window.innerWidth -10, 0, 20, window.innerHeight, { isStatic: true })
+        let top = Bodies.rectangle(0, 0, window.innerWidth * 2, 20, { isStatic: true, render: {fillStyle: 'transparent'}})
+        let bottom = Bodies.rectangle(0, window.innerHeight/2, window.innerWidth * 2, 20, { isStatic: true , render: {fillStyle: 'transparent'}})
+        let left = Bodies.rectangle(0, 0, 20, window.innerHeight, { isStatic: true , render: {fillStyle: 'transparent'}})
+        let right = Bodies.rectangle(window.innerWidth -10, 0, 20, window.innerHeight, { isStatic: true , render: {fillStyle: 'transparent'}})
 
         // mouse
         let mouse = Matter.Mouse.create(render_2d.canvas)
@@ -145,8 +146,24 @@ components: { ItemCartMin },
         // run the renderer
         Render.run(render_2d)
 
+        this.matter_list = {Bodies, World, engine}
+
         // Create items
         this.populateScene(Bodies, World, engine)
+      
+        nextTick(() => {
+            // ---- ANIMATION ----
+            let scene = document.getElementById("scene_container").getBoundingClientRect()
+ 
+            window.addEventListener("scroll", () => {
+                console.log("window.pageYOffset + (window.innerHeight/2)", window.pageYOffset + (window.innerHeight/2))
+                console.log("scene.top", scene.top)
+                if (window.pageYOffset + (window.innerHeight/2) > scene.top){
+                    console.log("on")
+                    this.populateScene()
+                }
+            })
+        })
     }
 }
 </script>
@@ -156,11 +173,13 @@ components: { ItemCartMin },
 {
     position: relative;
     overflow: hidden;
+    
 }
 #header
 {
     display: flex;
     flex-direction: row;
+    height: 200vh;
 }
 .button
 {

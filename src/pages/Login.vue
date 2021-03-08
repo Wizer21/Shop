@@ -7,7 +7,7 @@
             <h1 id="login_title">
                 Login
             </h1>
-            <div id="body_top">
+            <div id="body_top" :style="{animation: floating}">
                 <p class="text">
                     Username
                 </p>
@@ -22,7 +22,7 @@
             </div>
         </div>
         <div id="register">
-            <div id="body_bottom">
+            <div id="body_bottom" :style="{animation: floating}">
                 <p class="text">
                     Username
                 </p>
@@ -51,6 +51,11 @@ const db = require('../lowdb/lowdb.js')
 export default {
     name: 'Login'
     ,
+    data(){
+        return {
+            floating: `${this.$style["floating"]} 2s infinite alternate ease-in-out`
+        }
+    },
     mounted(){
         const button_slide = document.getElementById("swap_button")
         const register = document.getElementById("register")
@@ -132,7 +137,7 @@ export default {
     height: 100vh;
     width: 100vw;
 
-    transition-duration: 2s;
+    transition-duration: 1s;
 
     transform: translate(0vw, 0vh);
 }
@@ -158,7 +163,6 @@ export default {
     margin: 7em;
     margin-right: auto;
     margin-bottom: 40vh;
-
 }
 #body_bottom
 {
@@ -170,17 +174,6 @@ export default {
 
     margin: 5em;
     margin-top: 5em;
-}
-@keyframes floating{
-    0%{
-        transform: scale(0);
-    }
-    50%{        
-        transform: scale(2.5);
-    }
-    100%{        
-        transform: scale(2);
-    }
 }
 .spacing
 {
@@ -215,10 +208,10 @@ export default {
 {
     margin: 4em;
     z-index: 2;
-    width: 7vw;
-    height: 7vw;
-    top: -3.5vw;
-    left: -3.5vw;
+    width: 4em;
+    height: 4em;
+    top: -2em;
+    left: -2em;
     border-radius: 50%;
     background-color: transparent;
     border: 1px solid black;
@@ -233,23 +226,24 @@ export default {
 #swap_button:hover
 {
     transition-duration: 0.5s;
-    width: 8vw;
-    height: 8vw;  
-    top: -4vw;
-    left: -4vw;  
+    width: 5em;
+    height: 5em;  
+    top: -2.5em;
+    left: -2.5em;  
 }
 #swap_button:active
 {
     transition-duration: 0.5s;
-    width: 6vw;
-    height: 6vw;  
-    top: -3vw;
-    left: -3vw;  
+    width: 4.5em;
+    height: 4.5em;  
+    top: -2.25em;
+    left: -2.25em;  
 }
 .input
 {
     height: 5vh;
     outline: none;
+    font-size: 1.2em;
 }
 .button
 {
@@ -270,4 +264,15 @@ export default {
     transform: scale(1.02);
 }
 
+</style>
+
+<style module>
+@keyframes floating{
+    0%{
+        transform: translate(0em, 0em);
+    }
+    100%{        
+        transform: translate(0em, 1em);
+    }
+}
 </style>
