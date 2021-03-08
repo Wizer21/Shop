@@ -12,21 +12,29 @@
                 </button>   
             </a>  
         </div>
-        <p id="error">
+        <p v-if="isCartEmpty" id="error">
             Your cart is empty &#128528;
         </p>
-        <ItemCartMin
-            v-for="(obj, index_p) in getItemList" 
-            :key="index_p"  
-            
-            :item_size="obj.size"
-            :item_quantity="obj.quantity"
-            :item_id="obj.item_id"
-            :index="index_p"
+        <div v-else>
+            <ItemCartMin
+                v-for="(obj, index_p) in getItemList" 
+                :key="index_p"  
+                
+                :item_size="obj.size"
+                :item_quantity="obj.quantity"
+                :item_id="obj.item_id"
+                :index="index_p"
 
-            @delete_item="deleteElement(index_p)"
-            >
-        </ItemCartMin>  
+                @delete_item="deleteElement(index_p)"
+                @update="calculateTotalPrice()"
+                >
+            </ItemCartMin>  
+            <div id="conclusion">
+                <p id="price">
+                    {{ totalPrice }}€
+                </p>
+            </div>
+        </div>        
     </div>   
 </template>
 
@@ -38,9 +46,6 @@ export default {
 components: { ItemCartMin },
     name: 'Cart',
     computed: {
-        calculateItemsCart(){
-            return db.getUserCart(this.$store.state.user_id)
-        },
         calculateItemList(){
             let list = []
             let database = db.getUserCart(this.$store.state.user_id)
@@ -56,6 +61,9 @@ components: { ItemCartMin },
         },
         getItemList() {
             return this.itemList
+        },
+        isCartEmpty(){     
+            return this.getItemList.length == 0
         }
     },
     methods: {
@@ -68,26 +76,26 @@ components: { ItemCartMin },
             }
             this.itemList = my_list
             this.checkForEmptyCart()
+            this.calculateTotalPrice()
         },
-        checkForEmptyCart(){
-            console.log("this.getItemList.length", this.getItemList.length)
-            if (this.getItemList.length == 0){   
-                document.getElementById("error").style.display = "block"
+        calculateTotalPrice(){
+            let total = 0
+
+            for (let item of this.itemList){
+                total += db.getItemSellPrice(item.item_id, item.size) * item.quantity
             }
+            this.totalPrice = total.toFixed(2)
         }
     },
     data(){
         return {
             itemList: [],
-            matter_list: {},
-            bodiesList: []
+            totalPrice: 0
         }
     },
-    beforeMount() {
+    created() {
         this.itemList = this.calculateItemList
-    },
-    mounted(){
-        this.checkForEmptyCart()
+        this.totalPrice = this.calculateTotalPrice
     }
 }
 </script>
@@ -96,8 +104,7 @@ components: { ItemCartMin },
 #main_cart
 {
     position: relative;
-    overflow: hidden;
-    
+    overflow: hidden;    
 }
 #header
 {
@@ -129,8 +136,24 @@ components: { ItemCartMin },
 }
 #error
 {
-    display: none;
     text-align: center;
     font-size: 2em;
+}
+#conclusion
+{
+    position: relative;
+    height: 30vh;
+
+    margin: 1em;
+    margin-left: 5vw;
+    margin-right: 5vw;
+
+    border: 1px solid black;
+    border-radius: 1em;
+}
+#price
+{
+    font-size: 2em;
+    margin: 1em;
 }
 </style>

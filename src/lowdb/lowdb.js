@@ -273,3 +273,12 @@ export function getUserFromId(user_id){
             .find({id: user_id})
             .value()
 }
+
+export function getItemSellPrice(item_id, item_size){
+    return db.get('objects')
+            .find({id: item_id})
+            .get('sizes')
+            .find({s_name: item_size})
+            .get('sell_p')
+            .value()
+}

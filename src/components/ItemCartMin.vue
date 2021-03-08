@@ -6,10 +6,13 @@
         <div id="text">
             <p id="title">
                 {{ entireItem.name }}
-            </p>
+            </p>   
+            <p id="size">
+                {{ price }}€
+            </p> 
             <p id="size">
                 {{ item_size }}
-            </p>     
+            </p>  
         </div>     
         <p id="quantity">
             {{ quantity }}
@@ -67,23 +70,28 @@ const db = require('../lowdb/lowdb.js')
             },
             quantity(){
                 return this.local_item_quantity
+            },
+            price() {
+                return db.getItemSellPrice(this.item_id, this.item_size)
             }
         },
         methods: {
             add(){
                 this.local_item_quantity +=  1
                 db.addToCart(this.$store.state.user_id, this.item_id, this.item_size)
+                this.$emit("update")  
             },
             remove(){
                 if (this.local_item_quantity != 0){
                     this.local_item_quantity -=  1
                     db.removeFromCart(this.$store.state.user_id, this.item_id, this.item_size)
+                    this.$emit("update")   
                 }
             },
             delete_item() {
                 db.deleteItemFromCart(this.$store.state.user_id, this.item_id, this.item_size)
                 
-                this.$emit("delete_item")                         
+                this.$emit("delete_item")                       
             }
         },
     }
@@ -139,6 +147,14 @@ img{
     padding: 0.3em;
     font-size: 1.5em;    
 }
+#price
+{    
+    font-size: 0.9em;  
+    margin: 0em;
+    margin-left: 0.2em;  
+    padding: 0.3em;
+    font-size: 1.5em;  
+}
 #buttons
 {
     margin: 0em;
@@ -180,6 +196,7 @@ img{
     #buttons button
     {
         width: 33%;
+        font-size: 1.2em;
     }
     .button_add
     {
@@ -187,18 +204,23 @@ img{
     }
     #title
     {
-        font-size: 1.2em;
+        font-size: 1em;
     }
     #size
     {    
         margin: 0em;
+        font-size: 1em;
+    }
+    #price
+    {
+
     }
     #quantity
     {
         position: absolute;
         font-size: 1.4em;
 
-        margin: 2em;
+        margin: 0.6em;
         margin-bottom: 3em;
 
         right: 0px;
