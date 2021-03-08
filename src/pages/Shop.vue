@@ -1,37 +1,41 @@
 <template>
-    <div id="floating_image">
-        <img id="floating_img" ><img>
-    </div>
-    <div id="nav_bar">
-        <input id="search" placeholder="Search" >
-        <button class="button">
-            Filter
-        </button>
-        <a href="/cart">
-            <button class="button" id="cart_button">
-                Cart
-            </button>
-        </a>
-         <a href="/main">
+    <div id="shop_main">
+        <div id="floating_image">
+            <img id="floating_img" ><img>
+        </div>
+        <div id="nav_bar">
+            <input id="search" placeholder="Search" @input="typeEvent">
             <button class="button">
-                Home
+                Filter
             </button>
-        </a>
-    </div>
-    <div id="item_list">    
-        <ItemCard 
-            v-for="obj in items" 
-            v-bind:key="obj.id" 
-            
-            :item="obj" 
-            :displayed_size="obj.sizes[0].s_name" 
-            :item_id="obj.id" 
+            <a v-if="state.logged" href="/cart">
+                <button class="button" id="cart_button">
+                    Cart
+                </button>
+            </a>
+            <a href="/main">
+                <button class="button">
+                    Home
+                </button>
+            </a>
+        </div>
+        <div id="item_list">    
+            <ItemCard 
+                v-for="obj in items" 
+                v-bind:key="obj.id" 
+                
+                :item="obj" 
+                :displayed_size="obj.sizes[0].s_name" 
+                :item_id="obj.id" 
 
-            @updatedCart="updateCart"
-            > 
-        </ItemCard>
-    </div>
+                @updatedCart="updateCart"
 
+                :name="obj.name"
+                class="card_element"
+                > 
+            </ItemCard>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -43,12 +47,30 @@ components: { ItemCard },
     computed: {
         items () {
             return db.getObjectList()
+        }  ,          
+        state(){
+            console.log(this.$store.state.logged)
+            return this.$store.state
         }
     },
     methods: {
         updateCart(){
             document.getElementById('cart_button').textContent = `Cart ${db.getCardLength(this.$store.state.user_id)}`
-        }
+        },
+        typeEvent(event){
+            let text_to_find = event.target.value
+
+            let cardList = document.getElementsByClassName("card_element")
+
+            for (let card of cardList){
+                if (card.getAttribute('name').toLowerCase().indexOf(text_to_find.toLowerCase()) !== -1){
+                    card.style.display = 'inline'
+                }
+                else{                 
+                    card.style.display = 'none'
+                }
+            }
+        }        
     },
     mounted(){
         this.updateCart()
@@ -57,6 +79,11 @@ components: { ItemCard },
 </script>
 
 <style scoped>
+#shop_main
+{
+    position: relative;
+    overflow: hidden;
+}
 #floating_image
 {
     position: absolute;

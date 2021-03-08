@@ -26,7 +26,7 @@
                     {{ getList.sell_p }} €
                 </p>
             </div>    
-            <button id="addbutton" @click="addToCard">
+            <button v-if="state.logged" id="addbutton" @click="addToCard">
                 Add To Card
             </button>
         </div>
@@ -77,6 +77,9 @@ const db = require('../lowdb/lowdb.js')
                     image: 'plant',
                     stock: 0,                    
                 }
+            },            
+            state(){
+                return this.$store.state
             },
         },
         methods:{            
@@ -172,9 +175,11 @@ const db = require('../lowdb/lowdb.js')
         grid-template-rows: 1, 1fr;
         padding: 1em;
         z-index: 0;
-    }
-    .card{
         
+        display: block;
+    }
+    .card{        
+        position: relative;
         grid-row: 1;
         grid-column: 1;
 
@@ -189,6 +194,7 @@ const db = require('../lowdb/lowdb.js')
         overflow: hidden;
     }
     .panel{
+        position: relative;
         grid-row: 1;
         grid-column: 1;
         

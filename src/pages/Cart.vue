@@ -1,5 +1,5 @@
 <template>
-    <div id="main">
+    <div id="main_cart">
         <div id="header">
             <a href="/main">
                 <button class="button">
@@ -12,6 +12,9 @@
                 </button>   
             </a>  
         </div>
+        <p id="error">
+            Your cart is empty &#128528;
+        </p>
         <ItemCartMin
             v-for="(obj, index_p) in getItemList" 
             :key="index_p"  
@@ -24,16 +27,11 @@
             @delete_item="deleteElement(index_p)"
             >
         </ItemCartMin>  
-        <div id="scene_container">
-
-        </div>
     </div>   
 </template>
 
-<script>
-import Matter from 'matter-js';    
+<script> 
 import ItemCartMin from '../components/ItemCartMin.vue'
-import { nextTick } from 'vue';
 const db = require('../lowdb/lowdb.js')
 
 export default {
@@ -69,107 +67,33 @@ components: { ItemCartMin },
                 }
             }
             this.itemList = my_list
+            this.checkForEmptyCart()
         },
-        populateScene(){
-            for(let i of this.itemList){
-                let src = db.getImageSrc(i.item_id, i.size)
-                for (let e = 0; e < i.quantity; e++){
-                    this.createItem(this.matter_list.Bodies, this.matter_list.World, this.matter_list.engine, src)
-                }
+        checkForEmptyCart(){
+            console.log("this.getItemList.length", this.getItemList.length)
+            if (this.getItemList.length == 0){   
+                document.getElementById("error").style.display = "block"
             }
-        },
-        createItem(Bodies, World, engine, url){
-            var plant = Bodies.rectangle(Math.random() * window.innerWidth, Math.random() * window.innerHeight/2 , 50, 80)
-            plant.render.sprite.texture = require(`../images/min/${url}`)
-
-            World.add(engine.world, [plant])
         }
     },
     data(){
         return {
             itemList: [],
-            matter_list: {}
+            matter_list: {},
+            bodiesList: []
         }
     },
     beforeMount() {
         this.itemList = this.calculateItemList
     },
     mounted(){
-         // ---- MATTER JS ----
-        // module aliases
-        var Engine = Matter.Engine,
-        Render = Matter.Render,
-        World = Matter.World,
-        Bodies = Matter.Bodies
-
-        // create an engine
-        var engine = Engine.create()
-
-        let container = document.getElementById("scene_container")  
-        
-        // create a renderer
-        let render_2d = Render.create({
-        element: container,
-        engine: engine,
-        options: {
-            wireframes: false,
-            height: window.innerHeight/2,
-            width: window.innerWidth,
-            background: 'transparent',
-        }
-        })
-
-        let top = Bodies.rectangle(0, 0, window.innerWidth * 2, 20, { isStatic: true, render: {fillStyle: 'transparent'}})
-        let bottom = Bodies.rectangle(0, window.innerHeight/2, window.innerWidth * 2, 20, { isStatic: true , render: {fillStyle: 'transparent'}})
-        let left = Bodies.rectangle(0, 0, 20, window.innerHeight, { isStatic: true , render: {fillStyle: 'transparent'}})
-        let right = Bodies.rectangle(window.innerWidth -10, 0, 20, window.innerHeight, { isStatic: true , render: {fillStyle: 'transparent'}})
-
-        // mouse
-        let mouse = Matter.Mouse.create(render_2d.canvas)
-        let mouse_Constraint = Matter.MouseConstraint.create(engine, {
-            mouse: mouse,
-            constraint: {
-                render_2d: { visible: false }
-            }
-        })
-        render_2d.mouse = mouse
-
-        // Enable scroll page over the scene
-        mouse.element.removeEventListener("mousewheel", mouse_Constraint.mouse.mousewheel)
-        mouse.element.removeEventListener("DOMMouseScroll", mouse_Constraint.mouse.mousewheel)
-
-        // Add bodies to the world
-        World.add(engine.world, [top, bottom, left, right, mouse_Constraint])
-
-        // run the engine
-        Engine.run(engine)
-        // run the renderer
-        Render.run(render_2d)
-
-        this.matter_list = {Bodies, World, engine}
-
-        // Create items
-        this.populateScene(Bodies, World, engine)
-      
-        nextTick(() => {
-            // ---- ANIMATION ----
-            let scene = document.getElementById("scene_container").getBoundingClientRect()
- 
-            window.addEventListener("scroll", () => {
-                console.log("window.pageYOffset + (window.innerHeight/2)", window.pageYOffset + (window.innerHeight/2))
-                console.log("scene.top", scene.top)
-                if (window.pageYOffset + (window.innerHeight/2) > scene.top){
-                    console.log("on")
-                    this.populateScene()
-                }
-            })
-        })
+        this.checkForEmptyCart()
     }
 }
 </script>
 
 <style scoped>
-#main
+#main_cart
 {
     position: relative;
     overflow: hidden;
@@ -179,7 +103,6 @@ components: { ItemCartMin },
 {
     display: flex;
     flex-direction: row;
-    height: 200vh;
 }
 .button
 {
@@ -203,5 +126,11 @@ components: { ItemCartMin },
 {
     transition-duration: 50ms;
     transform: translate(0em, 0.2em);
+}
+#error
+{
+    display: none;
+    text-align: center;
+    font-size: 2em;
 }
 </style>
