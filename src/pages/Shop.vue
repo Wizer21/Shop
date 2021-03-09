@@ -10,7 +10,7 @@
                     Filter
                 </button>
             </a>
-            <a v-if="state.logged" href="/cart">
+            <a v-if="state.logged && !state.isAdmin" href="/cart">
                 <button class="button" id="cart_button">
                     Cart
                 </button>
@@ -124,14 +124,11 @@ components: { ItemCard },
 
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-end;
-    align-content: flex-start;
 }
 .button
 {
-    position: relative;
     height: 100%;
-    min-width: 20vw;
+    width: 15vw;
     background-color: transparent;
     border: 0px solid transparent;
     border-left: 1px solid black;
@@ -154,7 +151,6 @@ components: { ItemCard },
 }
 #search
 {
-    position: relative;
     height: 10vh;
     background-color: transparent;
     border: 0px solid transparent;
@@ -165,10 +161,6 @@ components: { ItemCard },
     font-size: 1.5em;
 }
 @media screen and (max-width: 800px){
-    #nav_bar
-    {
-        height: 20vh;
-    }
     #search
     {
         width: 100vw;
@@ -176,9 +168,26 @@ components: { ItemCard },
     .button
     {
         border-top: 1px solid black;
-        width:max-content;
-        width: 33.33vw;
-        flex: 1;
+        border-left: 0px solid transparent;
+        flex-grow: 1;
+        width: 100%;
+        height: 10vh;
+    } 
+    a
+    {
+        flex-grow: 1;
+    }
+    .button:hover
+    {
+        transition-duration: 200ms;
+        transform: translate(0em, -0.5em);
+
+    }
+    .button:active
+    {
+        transition-duration: 50ms;
+        transform: translate(0em, -0.25em);
+
     }
 }
 </style>

@@ -26,7 +26,7 @@
                     {{ getList.sell_p }} €
                 </p>
             </div>    
-            <button v-if="state.logged" id="addbutton" @click="addToCard">
+            <button v-if="state.logged && !state.isAdmin" id="addbutton" @click="addToCard">
                 Add To Cart
             </button>
         </div>

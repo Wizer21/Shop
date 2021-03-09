@@ -172,6 +172,16 @@ img{
     padding: 0em;
     font-size: 1.5em;
 }
+#buttons button:hover
+{
+    transition-duration: 400ms;
+    width: 15vw;
+}
+#buttons button:active
+{
+    transition-duration: 200ms;
+    transform: translate(-1em, 0em);
+}
 #quantity
 {
     height: min-content;
@@ -198,18 +208,29 @@ img{
         width: 33%;
         font-size: 1.2em;
     }
+    #buttons button:hover
+    {
+        transition-duration: 400ms;
+        width: 33%;
+    }
+    #buttons button:active
+    {
+        transition-duration: 200ms;
+        transform: translate(-1em, 0em);
+        width: 30%;
+    }
     .button_add
     {
         border: none !important;
     }
     #title
     {
-        font-size: 1.2em;
+        font-size: 1.5em;
     }
     #size
     {    
         margin: 0em;
-        font-size: 1em;
+        font-size: 1.3em;
     }
     #quantity
     {
@@ -224,14 +245,4 @@ img{
     }
 }
 
-#buttons button:hover
-{
-    transition-duration: 400ms;
-    width: 15vw;
-}
-#buttons button:active
-{
-    transition-duration: 200ms;
-    transform: translate(-1em, 0em);
-}
 </style>

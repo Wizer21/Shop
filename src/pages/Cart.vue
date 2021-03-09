@@ -244,6 +244,11 @@ components: { ItemCartMin },
     transform: scale(1.05);
     border: 1px solid rgb(209, 209, 209);
 }
+#validatePanel button:active
+{
+    transition-duration: 200ms;
+    transform: scale(0.5);
+}
 @media screen and (max-width: 800px){
     #validatePanel button
     {

@@ -1,6 +1,8 @@
-<template>
+<template> 
+    <div id="three_scene">
+    </div>
     <div id="main">
-        <a href="/main"> 
+        <a href="/main">
             <h1 id="title">
                 PlantShop
             </h1>
@@ -12,8 +14,58 @@
 </template>
 
 <script>
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 export default {
     name: 'Index',
+    mounted() {
+        const three_scene = document.getElementById('three_scene')
+
+        // THREE JS 3S SCENE
+        let scene = new THREE.Scene();
+
+        // Light
+        let light = new THREE.AmbientLight()
+        light.intensity = 2
+        scene.add(light)
+
+        // Camera
+        const camera = new THREE.PerspectiveCamera(
+            75,
+            window.innerWidth * 0.99 / (window.innerHeight/2),
+            0.1,
+            1000
+        )
+        camera.position.set(4.5, -0.5, 5)
+
+        // Render
+        let renderer = new THREE.WebGLRenderer({ alpha: true })
+        renderer.setClearColor( 0x000000, 0 )
+        three_scene.appendChild(renderer.domElement)
+
+        renderer.setSize(window.innerWidth, window.innerHeight)
+
+        // Camera Controler    
+        //const controls = new THREE.OrbitControls(camera, three_scene);   
+
+        let monstera
+        const loader = new GLTFLoader() 
+        loader.load("/model/leaf.glb", function ( gltf ) {
+            monstera = scene.add( gltf.scene )
+        })
+
+
+        // Animate
+        const animate = function () {
+            requestAnimationFrame(animate)
+            if (monstera){
+                monstera.rotation.y += 0.0003
+            }
+
+            renderer.render(scene, camera);
+        }
+        animate()
+    }
 }
 
 </script>
@@ -54,6 +106,12 @@ a
 {
     text-align: center;
     font-family: 'Caveat';
+}
+#three_scene
+{
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
 }
 </style>
 

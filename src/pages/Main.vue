@@ -15,10 +15,18 @@
                 </button>
             </a>
             <a href="/cart">
-                <button v-if="state.logged" class="buttons">
+                <button v-if="state.logged && !state.isAdmin" class="buttons">
                     Cart
                 </button>
             </a>
+            <a href="/admin">
+                <button v-if="state.isAdmin" class="buttons">
+                    Admin
+                </button>
+            </a>
+            <button v-if="state.logged" class="buttons">
+                Logout
+            </button>
         </div>
         <div id="flux">
             <div class="container" v-for="(image, index) in itemList" :key="index" >
@@ -50,8 +58,8 @@ export default {
         },
         getUser(){
             return db.getUserFromId(this.$store.state.user_id)
-        }
-    },
+        },    
+    }
 }
 
 </script>

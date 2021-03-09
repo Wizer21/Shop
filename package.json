@@ -12,6 +12,8 @@
     "lowdb": "^1.0.0",
     "matter-js": "^0.16.1",
     "poly-decomp": "^0.3.0",
+    "three": "^0.126.1",
+    "three-gltf-loader": "^1.111.0",
     "vue": "^3.0.0",
     "vue-sessionstorage": "^1.0.0",
     "vuex": "^4.0.0",

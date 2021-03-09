@@ -7,12 +7,20 @@ const db = low(adapter)
 db.defaults({
     users_count: 1,
     objects_count: 3,
-    users: [
+    users: [     
         {
             id: 0,
-            name: 'Simon',
+            name: 'Admin',
             password: '123',
             isAdmin: true,
+            cart: [],
+            history: []
+        },
+        {
+            id: 1,
+            name: 'Simon',
+            password: '123',
+            isAdmin: false,
             cart: [
                 {
                     id: 0,

@@ -93,7 +93,8 @@ export default {
                 if (db.getUserFromName(r_username) == undefined){
                     let new_id = db.registerUser(r_username, r_password)
                     this.$store.commit("login", {
-                        user_id: new_id
+                        user_id: new_id,
+                        admin: false
                     })      
                     window.location.href = '/main'
                 }
@@ -109,7 +110,8 @@ export default {
 
             if (connectionAttempt[0]){    
                 this.$store.commit("login", {
-                    user_id: connectionAttempt[1].id
+                    user_id: connectionAttempt[1].id,
+                    admin: connectionAttempt[1].isAdmin
                 })    
                 window.location.href = '/main'  
             }
