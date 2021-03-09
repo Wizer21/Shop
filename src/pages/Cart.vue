@@ -26,13 +26,25 @@
                 :index="index_p"
 
                 @delete_item="deleteElement(index_p)"
-                @update="calculateTotalPrice()"
+                @update="calculateTotal()"
                 >
             </ItemCartMin>  
-            <div id="conclusion">
+
+            <div id="conclusion_footer">
+                <p id="delivery">
+                    3 days
+                </p>
+                <p id="articles">
+                    {{ totalObjects }} articles
+                </p>
                 <p id="price">
                     {{ totalPrice }}€
                 </p>
+            </div>
+            <div id="validatePanel">
+                <button>
+                    Validate your cart 
+                </button>
             </div>
         </div>        
     </div>   
@@ -76,26 +88,30 @@ components: { ItemCartMin },
             }
             this.itemList = my_list
             this.checkForEmptyCart()
-            this.calculateTotalPrice()
+            this.calculateTotal()
         },
-        calculateTotalPrice(){
-            let total = 0
+        calculateTotal(){
+            let calcTotalPrice = 0
+            let calcTotalObjects = 0
 
             for (let item of this.itemList){
-                total += db.getItemSellPrice(item.item_id, item.size) * item.quantity
+                calcTotalPrice += db.getItemSellPrice(item.item_id, item.size) * item.quantity
+                calcTotalObjects += item.quantity
             }
-            this.totalPrice = total.toFixed(2)
+            this.totalPrice = calcTotalPrice.toFixed(2)
+            this.totalObjects = calcTotalObjects
         }
     },
     data(){
         return {
             itemList: [],
-            totalPrice: 0
+            totalPrice: 0,
+            totalObjects: 0
         }
     },
     mounted() {
         this.itemList = this.calculateItemList
-        this.calculateTotalPrice()
+        this.calculateTotal()
     }
 }
 </script>
@@ -139,15 +155,18 @@ components: { ItemCartMin },
     text-align: center;
     font-size: 2em;
 }
-#conclusion
+#conclusion_footer
 {
     position: relative;
-    height: 30vh;
+    display: grid;
+    grid-template-columns: 2, 2fr;
+    grid-auto-rows: minmax(100px, auto);
 
-    margin: 1em;
+    margin: 2em;
     margin-left: 5vw;
     margin-right: 5vw;
 
+    background-color: white;  
     border: 1px solid black;
     border-radius: 1em;
 }
@@ -155,5 +174,95 @@ components: { ItemCartMin },
 {
     font-size: 2em;
     margin: 1em;
+}
+#delivery
+{
+    position: relative;
+    grid-column: 1;
+    grid-row: 1;
+    margin: 1em;
+
+    font-size: 2em;
+    text-align: center;
+    align-self: center;
+}
+#articles
+{    
+    position: relative;
+    grid-column: 1;
+    grid-row: 2;
+    margin: 1em;
+    
+    font-size: 2em;
+    text-align: center;
+    align-self: center;
+}
+#price
+{
+    position: relative;
+    grid-column: 2;
+    grid-row: 1 / 3;
+    
+    font-size: 4em;
+    text-align: center;
+}
+#validatePanel
+{
+    position: relative;
+    display: flex;
+
+    justify-content: space-around;
+
+    height: 12vh;
+
+    margin: 1em;
+    margin-left: 5vw;
+    margin-right: 5vw;
+
+    border-radius: 1em;
+
+    transition-duration: 500ms;
+}
+#validatePanel button
+{
+    position: relative;
+    font-size: 2em;
+    margin: 2vh;
+    width: 45vw;
+
+    background-color: white;
+    border-radius: 1em;
+    border: 3px solid black;
+    color: black;
+    transition-duration: 400ms;    
+    outline: none;
+}
+#validatePanel button:hover
+{
+    transition-duration: 400ms;
+    border: 0px solid transparent;
+    transform: scale(1.05);
+    border: 1px solid rgb(209, 209, 209);
+}
+@media screen and (max-width: 800px){
+    #validatePanel button
+    {
+        font-size: 1em;
+    }
+    #price
+    {        
+        font-size: 2em;
+        align-self: center;
+    }
+    #delivery
+    {
+        font-size: 1.5em;
+        margin: 0.5em;
+    }
+    #articles
+    {    
+        font-size: 1.5em;
+        margin: 0.5em;
+    }
 }
 </style>

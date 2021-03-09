@@ -27,7 +27,7 @@
                 </p>
             </div>    
             <button v-if="state.logged" id="addbutton" @click="addToCard">
-                Add To Card
+                Add To Cart
             </button>
         </div>
     </div>

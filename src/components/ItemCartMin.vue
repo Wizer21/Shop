@@ -186,7 +186,7 @@ img{
 
     margin: 0.6em;
 }
-@media screen and (max-width: 800px){
+@media screen and (max-width: 1000px){
     #buttons
     {
         height: 4vh;
@@ -204,16 +204,12 @@ img{
     }
     #title
     {
-        font-size: 1em;
+        font-size: 1.2em;
     }
     #size
     {    
         margin: 0em;
         font-size: 1em;
-    }
-    #price
-    {
-
     }
     #quantity
     {
