@@ -10,7 +10,7 @@ const store = createStore({
     state () {
       return {
         logged: false,
-        user_id: 0,
+        user_id: -1,
         isAdmin: false
       }
     },
@@ -19,6 +19,11 @@ const store = createStore({
         state.logged = true
         state.user_id = payload.user_id
         state.isAdmin = payload.admin
+      },
+      logout(state) {       
+        state.logged = false
+        state.user_id = -1
+        state.isAdmin = false
       }
     },    
     plugins: [vuexPersist.plugin],

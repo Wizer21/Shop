@@ -24,7 +24,7 @@
                     Admin
                 </button>
             </a>
-            <button v-if="state.logged" class="buttons">
+            <button v-if="state.logged" class="buttons" @click="logout()">
                 Logout
             </button>
         </div>
@@ -59,6 +59,11 @@ export default {
         getUser(){
             return db.getUserFromId(this.$store.state.user_id)
         },    
+    },
+    methods: {
+        logout() {
+            this.$store.commit('logout')
+        },
     }
 }
 

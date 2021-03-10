@@ -7,12 +7,15 @@
             <p id="title">
                 {{ entireItem.name }}
             </p>   
-            <p id="size">
+            <p class="stats">
                 {{ price }}€
             </p> 
-            <p id="size">
+            <p class="stats">
                 {{ item_size }}
-            </p>  
+            </p>              
+            <p class="stats" id="avaible_count">
+                {{ getAvaible }} avaible
+            </p>
         </div>     
         <p id="quantity">
             {{ quantity }}
@@ -55,7 +58,9 @@ const db = require('../lowdb/lowdb.js')
         },
         data(){
             return {
-                local_item_quantity: this.item_quantity
+                local_item_quantity: this.item_quantity,
+                avaible: 0,
+                orderAvaible: true
             }
         },
         computed: {
@@ -73,13 +78,25 @@ const db = require('../lowdb/lowdb.js')
             },
             price() {
                 return db.getItemSellPrice(this.item_id, this.item_size)
-            }
+            },
+            getAvaible() {
+                return this.avaible
+            },
         },
         methods: {
             add(){
-                this.local_item_quantity +=  1
-                db.addToCart(this.$store.state.user_id, this.item_id, this.item_size)
-                this.$emit("update")  
+                if (this.avaible >= this.local_item_quantity + 1) {
+                    this.local_item_quantity +=  1
+                    db.addToCart(this.$store.state.user_id, this.item_id, this.item_size)
+                    this.$emit("update")  
+                }
+                else{
+                    document.getElementById('avaible_count').style.animation = `${this.$style["warning"]} 400ms`
+
+                    setTimeout(() => {
+                        document.getElementById('avaible_count').style.animation = ``
+                    }, 400)
+                }
             },
             remove(){
                 if (this.local_item_quantity != 0){
@@ -92,8 +109,15 @@ const db = require('../lowdb/lowdb.js')
                 db.deleteItemFromCart(this.$store.state.user_id, this.item_id, this.item_size)
                 
                 this.$emit("delete_item")                       
+            },
+            getQuantityAvaible() {
+                let db_avaible = db.getQuantityAvaible(this.item_id, this.item_size)
+                this.avaible = db_avaible
             }
         },
+        mounted() {            
+            this.getQuantityAvaible()
+        }
     }
 </script>
 
@@ -139,7 +163,7 @@ img{
     word-wrap: break-word;
     font-size: 2em;
 }
-#size
+.stats
 {    
     font-size: 0.9em;  
     margin: 0em;
@@ -227,10 +251,10 @@ img{
     {
         font-size: 1.5em;
     }
-    #size
+    .stats
     {    
         margin: 0em;
-        font-size: 1.3em;
+        font-size: 1em;
     }
     #quantity
     {
@@ -245,4 +269,17 @@ img{
     }
 }
 
+</style>
+
+<style module>
+@keyframes warning{
+    0%{
+        transform: translate(0.2em, 0em);
+        color: #f44336;
+    }
+    100%{    
+        color: black;
+        transform: translate(0em, 0em);
+    }
+}
 </style>

@@ -35,6 +35,18 @@ db.defaults({
             history: []
         },
     ],
+    orders: [
+        {
+            user_id: 1,
+            order: [
+                {
+                    object_id: 0,
+                    object_size: 'M',
+                    quantity: 5,
+                },
+            ]
+        }
+    ],
     objects: [
         {
             id: 0,
@@ -289,4 +301,32 @@ export function getItemSellPrice(item_id, item_size){
             .find({s_name: item_size})
             .get('sell_p')
             .value()
+}
+
+export function getQuantityAvaible(item_id, item_size){
+    return db.get('objects')
+            .find({id: item_id})
+            .get('sizes')
+            .find({s_name: item_size})
+            .get('stock')
+            .value()
+}
+
+export function pushOrder(new_order){
+    db.get('orders').push(new_order).write()
+
+    let item_list = new_order['order']
+    for (let item of item_list){
+        db.get('objects')
+            .find({id: item.object_id})
+            .get('sizes')
+            .find({s_name: item.object_size})
+            .update('stock', n => n - item.quantity)
+            .write()
+    }
+
+    db.get('users')
+    .find({id: new_order.user_id})
+    .assign({'cart': []})
+    .write()
 }

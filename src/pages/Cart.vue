@@ -42,7 +42,7 @@
                 </p>
             </div>
             <div id="validatePanel">
-                <button>
+                <button @click="validate">
                     Validate your cart 
                 </button>
             </div>
@@ -100,6 +100,23 @@ components: { ItemCartMin },
             }
             this.totalPrice = calcTotalPrice.toFixed(2)
             this.totalObjects = calcTotalObjects
+        },
+        validate() {
+            let order = {}
+            order['user_id'] = this.$store.state.user_id
+            order['order'] = []
+
+            let cart = db.getUserCart(order['user_id'])
+            for (let c of cart){
+                for (let s of c.sizes){
+                    order['order'].push({
+                        object_id: c.id,
+                        object_size: s.size,
+                        quantity: s.quantity,
+                    })
+                }
+            }
+            db.pushOrder(order)
         }
     },
     data(){
