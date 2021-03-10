@@ -1,10 +1,10 @@
 <template>
     <div id="main">
         <div id="nav_bar">
-            <button v-if="state.logged" class="buttons">
+            <button v-if="state.logged && !state.isAdmin" class="buttons">
                 {{ getUser.name }}
             </button>
-            <a v-else href="/login">
+            <a v-else-if='!state.isAdmin' href="/login">
                 <button class="buttons">
                     Login
                 </button>

@@ -6,6 +6,7 @@ import Shop from './pages/Shop.vue'
 import Error from './pages/Error.vue'
 import Login from './pages/Login.vue'
 import Cart from './pages/Cart.vue'
+import Admin from './pages/Admin.vue'
 
 // Import Store
 import store from './store.js'
@@ -16,7 +17,8 @@ const routes = {
   '/main': Main,
   '/shop': Shop,
   '/login': Login,
-  '/cart': Cart
+  '/cart': Cart,
+  '/admin': Admin
 }
 
 // Create Router

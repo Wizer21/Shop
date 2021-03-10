@@ -46,7 +46,19 @@
                     Validate your cart 
                 </button>
             </div>
-        </div>        
+        </div>   
+        <div id="order_complete">
+            <p>
+                Thanks you for ordering
+            </p>
+            <a href="/main">            
+                <button id="home_button">
+                    <p>
+                        Home
+                    </p>
+                </button>
+            </a>
+        </div>     
     </div>   
 </template>
 
@@ -117,6 +129,7 @@ components: { ItemCartMin },
                 }
             }
             db.pushOrder(order)
+            document.getElementById('order_complete').style.top = '0vh'
         }
     },
     data(){
@@ -129,6 +142,11 @@ components: { ItemCartMin },
     mounted() {
         this.itemList = this.calculateItemList
         this.calculateTotal()
+
+        let homebutton = document.getElementById('home_button')
+        homebutton.addEventListener('mouseup', () => {
+            homebutton.children[0].style.transform = 'translate(0em, -10em)'
+        })
     }
 }
 </script>
@@ -264,7 +282,7 @@ components: { ItemCartMin },
 #validatePanel button:active
 {
     transition-duration: 200ms;
-    transform: scale(0.5);
+    transform: scale(0.9);
 }
 @media screen and (max-width: 800px){
     #validatePanel button
@@ -286,5 +304,61 @@ components: { ItemCartMin },
         font-size: 1.5em;
         margin: 0.5em;
     }
+}
+#order_complete
+{
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+    top: 100vh;
+    left: 0px;
+    background-color: white;
+    z-index: 2;
+    transition-duration: 2000ms;
+}
+#order_complete p 
+{
+    font-size: 4em;
+}
+#home_button
+{
+    width: 13em;
+    height: 10vh;
+    background-color: transparent;
+    border: 1px solid rgb(209, 209, 209);
+    transition-duration: 400ms;
+    outline: none;
+    overflow: hidden;
+}
+#home_button:hover
+{
+    width: 16em;
+    border: 1px solid black;
+    transition-duration: 400ms;
+    border-radius: 20px;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+#home_button p
+{
+    margin: 0px;
+    transition-duration: 400ms;
+    font-size: 2em;
+}
+#home_button:hover p
+{
+    top: -0.11em;
+    transition-duration: 400ms;
+    font-size: 2.5em;
+}
+#home_button:active p
+{    
+    transition-duration: 400ms;
+    transform: translate(0em, 0.4em);
 }
 </style>
