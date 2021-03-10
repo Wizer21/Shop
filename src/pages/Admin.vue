@@ -22,3 +22,10 @@ components: { AdminItemCard },
 }
 </script>
 
+<style scoped>
+#item_list
+{
+    
+}
+</style>
+

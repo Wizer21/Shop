@@ -1,14 +1,21 @@
 <template>
-    <div class="main">
+    <div id="main">
         <p id="title">
             {{ item.name }}
         </p>
         <p id="stocks">
             {{ getStockList }}
-        </p>      
-    </div>
-    <div class="details">
-        Coucou
+        </p>    
+        <div id="details">
+            <div v-for="size in getItemSizes" :key='size.s_name' class="line">
+                <p>
+                    {{ size.s_name }}
+                </p>
+                <p>
+                    {{ size.stock }}
+                </p>
+            </div>
+        </div>  
     </div>
 </template>
 
@@ -31,38 +38,25 @@
                 }
                 
                 return text.substring(0, text.length - 3)
+            },
+            getItemSizes() {
+                return this.item.sizes
             }
-        },
-        mounted() {
-            let details = document.getElementsByClassName("details")[this.item.id]
-            let main = document.getElementsByClassName("main")[this.item.id]
-
-            main.addEventListener('mouseover', () => {
-                details.style.transform = "translate(0, 1.5em)"
-            })
-            main.addEventListener('mouseleave', () => {
-                if (!details.matches(':hover')){
-                    details.style.transform = "translate(0, 0em)"
-                }
-            })
-            details.addEventListener('mouseleave', () => {
-                if (!details.matches(':hover')){
-                    details.style.transform = "translate(0, 0em)"
-                }
-            })
         }
     }
 </script>
 
 <style scoped>
-.main
+#main
 {
-    margin: 2vw;
+    position: relative;
+    overflow: hidden;
+    margin: 1em;
     margin-left: 5vw;
     margin-right: 5vw;
 
-    display: flex;
-    flex-direction: row;
+
+    display: grid;
 
     border: 1px solid black;
     background-color: white;
@@ -80,17 +74,36 @@
     text-align: center;
 
     margin: 0.5em;
+    transition-duration: 400ms;
 }
-.details
+#details
 {    
     position: relative;
-    margin-left: 6vw;
-    margin-right: 6vw;
-    font-size: 2em;
+    font-size: 0em;
+    height: 0%;
 
-    top: -2.5em;
-    transition-duration: 300ms;
-    background-color: green;
-    z-index: -1;
+    transition-duration: 400ms;
 }
+#main:hover #stocks
+{
+    transform: translate(0em, 2em);
+    opacity: 0;
+}
+#main:hover #details
+{
+    font-size: 2em;
+    height: 100%;
+}
+.line
+{
+    display: flex;
+    flex-direction: row;
+    margin: 0.5em;
+    margin-top: 0em;
+    margin-bottom: 0em;
+}
+.line p 
+{
+    margin: 0.2em;
+};
 </style>
