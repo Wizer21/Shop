@@ -11,9 +11,22 @@
                 <p>
                     {{ size.s_name }}
                 </p>
-                <p>
-                    {{ size.stock }}
-                </p>
+                <div class="inline">
+                    <p class="sub">Stock</p>
+                    <input type="number" class="input" :value="size.stock">    
+                </div>
+                <div class="inline">
+                    <p class="sub">BuyP</p>
+                    <input type="number" class="input" :value="size.buy_p"> 
+                </div>  
+                <div class="inline">
+                    <p class="sub">SellP</p>
+                    <input type="number" class="input" :value="size.sell_p">  
+                </div>   
+                <div class="inline">
+                    <p class="sub">TVA</p>
+                    <input type="number" class="input" :value="size.tva">    
+                </div>              
             </div>
         </div>  
     </div>
@@ -98,12 +111,46 @@
 {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    align-items:flex-end;
+    justify-content: space-between;
+
     margin: 0.5em;
-    margin-top: 0em;
-    margin-bottom: 0em;
+    margin-bottom: 0.2em;
 }
 .line p 
 {
     margin: 0.2em;
-};
+}
+.input
+{
+    font-size: 0em;
+    opacity: 0;
+    border: 0px solid transparent;
+    outline: none;
+}
+#main:hover .input
+{
+    font-size: 0.8em;
+    opacity: 1;
+}
+.input:hover
+{
+    border: 1px solid black;
+}
+.sub
+{    
+    font-size: 0em;
+    opacity: 0;
+}
+#main:hover .sub
+{
+    font-size: 0.6em;
+    opacity: 1;
+}
+.inline
+{
+    display: flex;
+    flex-direction: row;
+}
 </style>

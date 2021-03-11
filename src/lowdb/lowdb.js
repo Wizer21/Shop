@@ -56,7 +56,7 @@ db.defaults({
                 {
                     s_name: 'S',
                     buy_p: '15.34',
-                    tva: '20%',
+                    tva: '20',
                     sell_p: '18.94',
                     image: 'monstera_s.jpg',
                     stock: 8,
@@ -64,7 +64,7 @@ db.defaults({
                 {
                     s_name: 'M',
                     buy_p: '24.24',
-                    tva: '20%',
+                    tva: '20',
                     sell_p: '35.12',
                     image: 'monstera_s.jpg',
                     stock: 12,
@@ -72,7 +72,7 @@ db.defaults({
                 {
                     s_name: 'L',
                     buy_p: '45.34',
-                    tva: '20%',
+                    tva: '20',
                     sell_p: '67.54',
                     image: 'monstera_l.jpg',
                     stock: 0,
@@ -87,7 +87,7 @@ db.defaults({
                 {
                     s_name: 'M',
                     buy_p: '3.34',
-                    tva: '20%',
+                    tva: '20',
                     sell_p: '7.84',
                     image: 'dieffenbachia_m.jpg',                    
                     stock: 18,
@@ -102,7 +102,7 @@ db.defaults({
                 {
                     s_name: 'M',
                     buy_p: '2.34',
-                    tva: '20%',
+                    tva: '20',
                     sell_p: '5.84',
                     image: 'dracaena_m.jpg',
                     stock: 60,
