@@ -295,4 +295,9 @@ const db = require('../lowdb/lowdb.js')
         transition-duration: 400ms;
         transform: scale(1.1);
     }
+    #addbutton:active
+    {
+        transition-duration: 25ms;
+        transform: scale(1); 
+    }
 </style>

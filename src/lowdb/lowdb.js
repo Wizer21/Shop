@@ -7,6 +7,7 @@ const db = low(adapter)
 db.defaults({
     users_count: 1,
     objects_count: 3,
+    order_count: 1,
     users: [     
         {
             id: 0,
@@ -37,6 +38,7 @@ db.defaults({
     ],
     orders: [
         {
+            id: 0,
             user_id: 1,
             order: [
                 {
@@ -313,6 +315,10 @@ export function getQuantityAvaible(item_id, item_size){
 }
 
 export function pushOrder(new_order){
+    console.log(db.get('order_count').value())
+    new_order['id'] = db.get('order_count').value()
+    db.update('order_count', n => n + 1).write()
+
     db.get('orders').push(new_order).write()
 
     let item_list = new_order['order']
@@ -329,4 +335,8 @@ export function pushOrder(new_order){
     .find({id: new_order.user_id})
     .assign({'cart': []})
     .write()
+}
+
+export function getOrders(){
+    return db.get('orders').value()
 }

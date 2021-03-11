@@ -13,19 +13,19 @@
                 </p>
                 <div class="inline">
                     <p class="sub">Stock</p>
-                    <input type="number" class="input" :value="size.stock">    
+                    <p class="subdata"> {{ size.stock }}</p>   
                 </div>
                 <div class="inline">
                     <p class="sub">BuyP</p>
-                    <input type="number" class="input" :value="size.buy_p"> 
+                    <p class="subdata">  {{ size.buy_p }} </p>    
                 </div>  
                 <div class="inline">
                     <p class="sub">SellP</p>
-                    <input type="number" class="input" :value="size.sell_p">  
+                    <p class="subdata">  {{ size.sell_p }} </p>     
                 </div>   
                 <div class="inline">
                     <p class="sub">TVA</p>
-                    <input type="number" class="input" :value="size.tva">    
+                    <p class="subdata">  {{ size.tva }}</p>       
                 </div>              
             </div>
         </div>  
@@ -67,7 +67,6 @@
     margin: 1em;
     margin-left: 5vw;
     margin-right: 5vw;
-
 
     display: grid;
 
@@ -112,7 +111,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    align-items:flex-end;
+    align-items: baseline;
     justify-content: space-between;
 
     margin: 0.5em;
@@ -122,21 +121,17 @@
 {
     margin: 0.2em;
 }
-.input
+.subdata
 {
     font-size: 0em;
     opacity: 0;
     border: 0px solid transparent;
     outline: none;
 }
-#main:hover .input
+#main:hover .subdata
 {
     font-size: 0.8em;
     opacity: 1;
-}
-.input:hover
-{
-    border: 1px solid black;
 }
 .sub
 {    
@@ -152,5 +147,18 @@
 {
     display: flex;
     flex-direction: row;
+    align-items: baseline;
+}
+@media screen and (max-width: 800px) {
+    #title
+    {
+        font-size: 1.2em;
+    }
+    #stocks
+    {
+        font-size: 1.2em;
+        text-align: right;
+        margin-left: -5vw;
+    }
 }
 </style>

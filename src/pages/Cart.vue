@@ -47,19 +47,19 @@
                 </button>
             </div>
         </div>   
-        <div id="order_complete">
-            <p>
-                Thanks you for ordering
-            </p>
-            <a href="/main">            
-                <button id="home_button">
-                    <p>
-                        Home
-                    </p>
-                </button>
-            </a>
-        </div>     
     </div>   
+    <div id="order_complete">
+        <p>
+            Thanks you for ordering
+        </p>
+        <a href="/main">            
+            <button id="home_button">
+                <p>
+                    Home
+                </p>
+            </button>
+        </a>
+    </div>     
 </template>
 
 <script> 
@@ -129,7 +129,8 @@ components: { ItemCartMin },
                 }
             }
             db.pushOrder(order)
-            document.getElementById('order_complete').style.top = '0vh'
+            document.getElementById('order_complete').style.top = `0px`
+            document.getElementById('main_cart').style.display = 'none'
         }
     },
     data(){
@@ -315,7 +316,7 @@ components: { ItemCartMin },
     align-items: center;
     flex-direction: column;
     
-    top: 100vh;
+    top: -100vh;
     left: 0px;
     background-color: white;
     z-index: 2;
@@ -360,5 +361,6 @@ components: { ItemCartMin },
 {    
     transition-duration: 400ms;
     transform: translate(0em, 0.4em);
+    outline: none;
 }
 </style>
